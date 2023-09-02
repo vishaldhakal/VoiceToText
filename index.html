@@ -1,0 +1,1085 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+   <meta charset="utf-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="canonical" href="https://www.typingguru.net/voice-to-text/nepali-voice-typing">
+   <title>Nepali (नेपाली) speech to text, Nepali voice to text</title>
+   <meta name="description"
+      content="It is a Nepali (नेपाली) voice typing tool. Click on the Mic icon and start speaking in Nepali (नेपाली), it will be converted to text. You can write Nepali (नेपाली) by speaking in Nepali here.">
+   <meta name="keywords"
+      content="nepali voice to text, nepali speech to text, nepali voice typing, nepali speech to text software, voice to text  (नेपाली)">
+   <script type="application/ld+json">
+{
+	"@context": "https://schema.org",
+	"@type": "BreadcrumbList",
+	"itemListElement": [{
+		"@type": "ListItem",
+		"position": 1,
+		"name": "Voice to Text",
+		"item": "https://www.typingguru.net/voice-to-text"
+	},
+	{
+		"@type": "ListItem",
+		"position": 2,
+		"name": "Nepali Voice Typing"
+	}]
+}
+</script>
+
+   <style>
+      #div_start {
+         text-align: center;
+         padding: 8px 0 10px 0;
+      }
+
+      #start_button {
+         border: 0;
+         background-color: transparent;
+         cursor: pointer;
+         position: relative
+      }
+
+      .interim {
+         color: gray;
+      }
+
+      .final {
+         color: black;
+         padding-right: 3px
+      }
+
+      #loadingIndicator {
+         position: absolute !important;
+         top: 50%;
+         left: 50%;
+         z-index: 99 !important;
+         width: 70px;
+         height: 70px;
+         margin-top: -35px;
+         margin-left: -35px;
+         background-color: #fff;
+         border-radius: 100%;
+         -webkit-animation: loading-spinner 1s infinite ease-in-out;
+         animation: loading-spinner 1s infinite ease-in-out;
+         transition: .3s linear;
+         -webkit-transition: .3s linear;
+         -moz-transition: .3s linear;
+         display: inline-block;
+      }
+
+      @-webkit-keyframes loading-spinner {
+         0% {
+            -webkit-transform: scale(0)
+         }
+
+         100% {
+            -webkit-transform: scale(1);
+            opacity: 0
+         }
+      }
+
+      @keyframes loading-spinner {
+         0% {
+            -webkit-transform: scale(0);
+            transform: scale(0)
+         }
+
+         100% {
+            -webkit-transform: scale(1);
+            transform: scale(1);
+            opacity: 0
+         }
+      }
+
+      #info p {
+         font-size: 1rem;
+         text-align: center;
+         margin: 0;
+      }
+
+      #info p mark {
+         padding: 3px 5px;
+      }
+
+      #info p.clr-green {
+         color: #090;
+      }
+
+      #info p.clr-red {
+         color: #f00;
+      }
+
+      #results .interim {
+         padding-left: 10px;
+         font-size: 1rem;
+      }
+
+      #textareaWrapper {
+         background-color: #243444;
+         padding: 0 12px 10px 12px;
+      }
+
+      #final_span {
+         width: 100%;
+         font-size: 1.125rem;
+         line-height: 1.6;
+         height: 222px;
+         padding: 10px 12px;
+         background-color: #fff;
+         border-radius: 4px;
+      }
+
+      .textareaBtn {
+         padding: 8px 0;
+         display: flex
+      }
+
+      .textareaBtn .menuBtn {
+         font-size: .75rem;
+         font-weight: 500;
+         line-height: 36px;
+         padding: 0px 8px;
+         margin: 2px;
+         color: #fff;
+         cursor: pointer;
+         background: #3d556d;
+         display: flex
+      }
+
+      .textareaBtn .menuBtn.reset-icon {
+         background-color: var(--clr-primary);
+      }
+
+      .textareaBtn .menuBtn:hover {
+         color: #fff;
+         background: #18bd9b;
+      }
+
+      .textareaBtn .menuBtn::before {
+         font-family: var(--font-icon);
+         margin-right: 3px;
+         line-height: 36px;
+         font-size: 1.25rem;
+         font-weight: 200
+      }
+
+      .textareaBtn .menuBtn.copy-icon::before {
+         content: "\e14d";
+      }
+
+      .textareaBtn .menuBtn.printer-icon::before {
+         content: "\e8ad";
+      }
+
+      .textareaBtn .menuBtn.download-icon::before {
+         font-family: var(--font-icon);
+         content: "\e2c4";
+      }
+
+      .textareaBtn .menuBtn.reset-icon::before {
+         content: "\f053";
+      }
+
+      .share-icon ul {
+         list-style-type: none;
+         margin: 0;
+         padding: 0;
+         display: flex;
+         padding-left: 2px
+      }
+
+      .share-icon ul li {
+         padding: 2px 2px 2px 0;
+      }
+
+      .share-icon ul li:first-child {
+         padding-right: 0;
+      }
+
+      .share-icon ul li a {
+         display: flex;
+         justify-content: center;
+         align-items: center;
+         width: 36px;
+         height: 36px;
+         fill: #fff;
+      }
+
+      .share-icon ul li.wa a {
+         background-color: #2ab540;
+      }
+
+      .share-icon ul li.wa a:hover {
+         background-color: #fff;
+      }
+
+      .share-icon ul li.wa a:hover svg {
+         fill: #2ab540;
+      }
+
+      .share-icon ul li.tw a {
+         background-color: #00aced;
+      }
+
+      .share-icon ul li.tw a:hover {
+         background-color: #fff;
+      }
+
+      .share-icon ul li.tw a:hover svg {
+         fill: #00aced;
+      }
+
+      .words-count-wrapper {
+         display: flex;
+         flex-direction: row-reverse;
+      }
+
+      .words-count-wrapper .words-count-cntnr {
+         color: #d5d5d5;
+         font-size: .875rem;
+         line-height: 20px;
+         padding-left: 12px;
+      }
+
+      #wordCount,
+      #charCountNoSpace,
+      #totalChars {
+         color: #fff;
+         font-weight: 600;
+      }
+   </style>
+
+   <meta property="og:type" content="website">
+   <meta property="og:title" content="Nepali (नेपाली) speech to text, Nepali voice to text">
+   <meta property="og:description"
+      content="It is a Nepali (नेपाली) voice typing tool. Click on the Mic icon and start speaking in Nepali (नेपाली), it will be converted to text. You can write Nepali (नेपाली) by speaking in Nepali here.">
+   <meta property="og:url" content="https://www.typingguru.net/voice-to-text/nepali-voice-typing">
+   <meta property="og:site_name" content="TypingGuru">
+   <meta property="og:image" content="https://www.typingguru.net/images/social-thumbnail.png">
+   <meta property="og:image:width" content="640">
+   <meta property="og:image:height" content="640">
+   <meta property="article:tag" content="nepali voice to text">
+   <meta property="article:tag" content="nepali speech to text">
+   <meta property="article:tag" content="nepali voice typing">
+   <meta property="article:tag" content="nepali speech to text software">
+   <meta property="article:tag" content="voice to text  (नेपाली)">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link type="text/css" href="css/style.css?v=1.1.1" rel="stylesheet">
+
+   <!-- Google tag (gtag.js) -->
+   <script async src="https://www.googletagmanager.com/gtag/js?id=G-053BD0L15L"></script>
+   <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag('js', new Date());
+      gtag('config', 'G-053BD0L15L');
+   </script>
+
+   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1765769888693648"
+      crossorigin="anonymous"></script>
+
+   <link rel="icon" type="image/x-icon" href="images/favicon/favicon.ico">
+   <link rel="icon" type="image/png" sizes="32x32" href="images/favicon/favicon32x32.png">
+   <link rel="icon" type="image/png" sizes="32x32" href="images/favicon/favicon36x36.png">
+   <link rel="icon" type="image/png" sizes="48x48" href="images/favicon/favicon48x48.png">
+   <link rel="icon" type="image/png" sizes="48x48" href="images/favicon/favicon72x72.png">
+   <link rel="icon" type="image/png" sizes="96x96" href="images/favicon/favicon96x96.png">
+   <link rel="icon" type="image/png" sizes="196x196" href="images/favicon/favicon192x192.png">
+   <link rel="icon" type="image/png" sizes="196x196" href="images/favicon/favicon196x196.png">
+   <link rel="icon" type="image/png" sizes="196x196" href="images/favicon/favicon256x256.png">
+   <link rel="icon" type="image/png" sizes="196x196" href="images/favicon/favicon384x384.png">
+   <link rel="icon" type="image/png" sizes="196x196" href="images/favicon/favicon512x512.png">
+   <link rel="apple-touch-icon" sizes="144x144" href="images/favicon/favicon144x144.png">
+   <link rel="manifest" href="/manifest.json">
+   <meta name="theme-color" content="#d40041">
+
+</head>
+
+<body>
+   <header id="header">
+      <div class="st-container st-ps st-pe-loop">
+
+         <div id="branding">
+            <a href="/" title="TypingGuru Home">
+               <img src="/images/logo.png" alt="TypingGuru Logo" width="260" height="52">
+            </a>
+         </div>
+
+         <nav id="nav">
+            <ul>
+               <li class="i-fonts">
+                  <button type="button" class="link">Fonts</button>
+                  <ul>
+                     <li><a href="/font" title="FREE Fonts">ALL Fonts</a></li>
+                     <li><a href="/hindi-fonts" title="FREE Hindi Fonts">Hindi Fonts</a></li>
+                     <li><a href="/punjabi-fonts" title="FREE Punjabi Fonts">Punjabi Fonts</a></li>
+                     <li><a href="/tamil-fonts" title="FREE Tamil Fonts">Tamil Fonts</a></li>
+                     <li><a href="/telugu-fonts" title="FREE Telugu Fonts">Telugu Fonts</a></li>
+                     <li><a href="/thai-fonts" title="FREE Thai Fonts">Thai Fonts</a></li>
+                  </ul>
+               </li>
+               <li class="i-keyboard">
+                  <button type="button" class="link">Typing</button>
+                  <ul>
+                     <li><a href="/typing/english-to-amharic-typing" title="English to Amharic Typing">Amharic
+                           Typing</a></li>
+                     <li><a href="/typing/english-to-arabic-typing" title="English to Arabic Typing">Arabic Typing</a>
+                     </li>
+                     <li><a href="/typing/english-to-bengali-typing" title="English to Bengali Typing">Bengali
+                           Typing</a></li>
+                     <li><a href="/typing/english-to-chinese-typing" title="English to Chinese Typing">Chinese
+                           Typing</a></li>
+                     <li><a href="/typing/english-to-greek-typing" title="English to Greek Typing">Greek Typing</a></li>
+                     <li><a href="/typing/english-to-gujarati-typing" title="English to Gujarati Typing">Gujarati
+                           Typing</a></li>
+                     <li><a href="/typing/english-to-hindi-typing" title="English to Hindi Typing">Hindi Typing</a></li>
+                     <li><a href="/typing/english-to-kannada-typing" title="English to Kannada Typing">Kannada
+                           Typing</a></li>
+                     <li><a href="/typing/english-to-malayalam-typing" title="English to Malayalam Typing">Malayalam
+                           Typing</a></li>
+                     <li><a href="/typing/english-to-marathi-typing" title="English to Marathi Typing">Marathi
+                           Typing</a></li>
+                     <li><a href="/typing/english-to-nepali-typing" title="English to Nepali Typing">Nepali Typing</a>
+                     </li>
+                     <li><a href="/typing/english-to-oriya-typing" title="English to Oriya Typing">Oriya Typing</a></li>
+                     <li><a href="/typing/english-to-persian-typing" title="English to Persian Typing">Persian
+                           Typing</a></li>
+                     <li><a href="/typing/english-to-punjabi-typing" title="English to Punjabi Typing">Punjabi
+                           Typing</a></li>
+                     <li><a href="/typing/english-to-russian-typing" title="English to Russian Typing">Russian
+                           Typing</a></li>
+                     <li><a href="/typing/english-to-sanskrit-typing" title="English to Sanskrit Typing">Sanskrit
+                           Typing</a></li>
+                     <li><a href="/typing/english-to-serbian-typing" title="English to Serbian Typing">Serbian
+                           Typing</a></li>
+                     <li><a href="/typing/english-to-sinhalese-typing" title="English to Sinhalese Typing">Sinhalese
+                           Typing</a></li>
+                     <li><a href="/typing/english-to-tamil-typing" title="English to Tamil Typing">Tamil Typing</a></li>
+                     <li><a href="/typing/english-to-telugu-typing" title="English to Telugu Typing">Telugu Typing</a>
+                     </li>
+                     <li><a href="/typing/english-to-tigrinya-typing" title="English to Tigrinya Typing">Tigrinya
+                           Typing</a></li>
+                     <li><a href="/typing/english-to-urdu-typing" title="English to Urdu Typing">Urdu Typing</a></li>
+                     <li><a href="/typing" title="Type in these 22 languages">ALL</a></li>
+                  </ul>
+               </li>
+               <li class="i-mic">
+                  <button type="button" class="link">Voice Typing</button>
+                  <ul>
+                     <li><a href="/voice-to-text/afrikaans-voice-typing" title="Afrikaans Speech to Text">Afrikaans
+                           Voice Typing</a></li>
+                     <li><a href="/voice-to-text/amharic-voice-typing" title="Amharic Speech to Text">Amharic Voice
+                           Typing</a></li>
+                     <li><a href="/voice-to-text/arabic-voice-typing" title="Arabic Speech to Text">Arabic Voice
+                           Typing</a></li>
+                     <li><a href="/voice-to-text/armenian-voice-typing" title="Armenian Speech to Text">Armenian Voice
+                           Typing</a></li>
+                     <li><a href="/voice-to-text/azeri-voice-typing" title="Azeri Speech to Text">Azeri Voice Typing</a>
+                     </li>
+                     <li><a href="/voice-to-text/indonesian-voice-typing" title="Bahasa Indonesia Speech to Text">Bahasa
+                           Indonesia Voice Typing</a></li>
+                     <li><a href="/voice-to-text/basque-voice-typing" title="Basque Speech to Text">Basque Voice
+                           Typing</a></li>
+                     <li><a href="/voice-to-text/bengali-voice-typing" title="Bengali Speech to Text">Bengali Voice
+                           Typing</a></li>
+                     <li><a href="/voice-to-text/bulgarian-voice-typing" title="Bulgarian Speech to Text">Bulgarian
+                           Voice Typing</a></li>
+                     <li><a href="/voice-to-text/catalan-voice-typing" title="Catalan Speech to Text">Catalan Voice
+                           Typing</a></li>
+                     <li><a href="/voice-to-text/chinese-voice-typing" title="Chinese Speech to Text">Chinese Voice
+                           Typing</a></li>
+                     <li><a href="/voice-to-text/croatian-voice-typing" title="Croatian Speech to Text">Croatian Voice
+                           Typing</a></li>
+                     <li><a href="/voice-to-text/czech-voice-typing" title="Czech Speech to Text">Czech Voice Typing</a>
+                     </li>
+                     <li><a href="/voice-to-text/danish-voice-typing" title="Danish Speech to Text">Danish Voice
+                           Typing</a></li>
+                     <li><a href="/voice-to-text/dutch-voice-typing" title="Dutch Speech to Text">Dutch Voice Typing</a>
+                     </li>
+                     <li><a href="/voice-to-text/english-voice-typing" title="English Speech to Text">English Voice
+                           Typing</a></li>
+                     <li><a href="/voice-to-text/filipino-voice-typing" title="Filipino Speech to Text">Filipino Voice
+                           Typing</a></li>
+                     <li><a href="/voice-to-text/finnish-voice-typing" title="Finnish Speech to Text">Finnish Voice
+                           Typing</a></li>
+                     <li><a href="/voice-to-text/french-voice-typing" title="French Speech to Text">French Voice
+                           Typing</a></li>
+                     <li><a href="/voice-to-text/galician-voice-typing" title="Galician Speech to Text">Galician Voice
+                           Typing</a></li>
+                     <li><a href="/voice-to-text/georgian-voice-typing" title="Georgian Speech to Text">Georgian Voice
+                           Typing</a></li>
+                     <li><a href="/voice-to-text/german-voice-typing" title="German Speech to Text">German Voice
+                           Typing</a></li>
+                     <li><a href="/voice-to-text/greek-voice-typing" title="Greek Speech to Text">Greek Voice Typing</a>
+                     </li>
+                     <li><a href="/voice-to-text/gujarati-voice-typing" title="Gujarati Speech to Text">Gujarati Voice
+                           Typing</a></li>
+                     <li><a href="/voice-to-text/hebrew-voice-typing" title="Hebrew Speech to Text">Hebrew Voice
+                           Typing</a></li>
+                     <li><a href="/voice-to-text/hindi-voice-typing" title="Hindi Speech to Text">Hindi Voice Typing</a>
+                     </li>
+                     <li><a href="/voice-to-text/hungarian-voice-typing" title="Hungarian Speech to Text">Hungarian
+                           Voice Typing</a></li>
+                     <li><a href="/voice-to-text/icelandic-voice-typing" title="Icelandic Speech to Text">Icelandic
+                           Voice Typing</a></li>
+                     <li><a href="/voice-to-text/italian-voice-typing" title="Italian Speech to Text">Italian Voice
+                           Typing</a></li>
+                     <li><a href="/voice-to-text/japanese-voice-typing" title="Japanese Speech to Text">Japanese Voice
+                           Typing</a></li>
+                     <li><a href="/voice-to-text/jawa-voice-typing" title="Jawa Speech to Text">Jawa Voice Typing</a>
+                     </li>
+                     <li><a href="/voice-to-text/kannada-voice-typing" title="Kannada Speech to Text">Kannada Voice
+                           Typing</a></li>
+                     <li><a href="/voice-to-text/khmer-voice-typing" title="Khmer Speech to Text">Khmer Voice Typing</a>
+                     </li>
+                     <li><a href="/voice-to-text/korean-voice-typing" title="Korean Speech to Text">Korean Voice
+                           Typing</a></li>
+                     <li><a href="/voice-to-text/lao-voice-typing" title="Lao Speech to Text">Lao Voice Typing</a></li>
+                     <li><a href="/voice-to-text/latvian-voice-typing" title="Latvian Speech to Text">Latvian Voice
+                           Typing</a></li>
+                     <li><a href="/voice-to-text/lithuanian-voice-typing" title="Lithuanian Speech to Text">Lithuanian
+                           Voice Typing</a></li>
+                     <li><a href="/voice-to-text/malayalam-voice-typing" title="Malayalam Speech to Text">Malayalam
+                           Voice Typing</a></li>
+                     <li><a href="/voice-to-text/malay-voice-typing" title="Malay Speech to Text">Malay Voice Typing</a>
+                     </li>
+                     <li><a href="/voice-to-text/marathi-voice-typing" title="Marathi Speech to Text">Marathi Voice
+                           Typing</a></li>
+                     <li><a href="/voice-to-text/nepali-voice-typing" title="Nepali Speech to Text">Nepali Voice
+                           Typing</a></li>
+                     <li><a href="/voice-to-text/norwegian-bokmal-voice-typing"
+                           title="Norwegian Bokmål Speech to Text">Norwegian Bokmål Voice Typing</a></li>
+                     <li><a href="/voice-to-text/persian-voice-typing" title="Persian Speech to Text">Persian Voice
+                           Typing</a></li>
+                     <li><a href="/voice-to-text/polish-voice-typing" title="Polish Speech to Text">Polish Voice
+                           Typing</a></li>
+                     <li><a href="/voice-to-text/portuguese-voice-typing" title="Portuguese Speech to Text">Portuguese
+                           Voice Typing</a></li>
+                     <li><a href="/voice-to-text/romanian-voice-typing" title="Romanian Speech to Text">Romanian Voice
+                           Typing</a></li>
+                     <li><a href="/voice-to-text/russian-voice-typing" title="Russian Speech to Text">Russian Voice
+                           Typing</a></li>
+                     <li><a href="/voice-to-text/serbian-voice-typing" title="Serbian Speech to Text">Serbian Voice
+                           Typing</a></li>
+                     <li><a href="/voice-to-text/sinhala-voice-typing" title="Sinhala Speech to Text">Sinhala Voice
+                           Typing</a></li>
+                     <li><a href="/voice-to-text/slovak-voice-typing" title="Slovak Speech to Text">Slovak Voice
+                           Typing</a></li>
+                     <li><a href="/voice-to-text/spanish-voice-typing" title="Spanish Speech to Text">Spanish Voice
+                           Typing</a></li>
+                     <li><a href="/voice-to-text/swahili-voice-typing" title="Swahili Speech to Text">Swahili Voice
+                           Typing</a></li>
+                     <li><a href="/voice-to-text/swedish-voice-typing" title="Swedish Speech to Text">Swedish Voice
+                           Typing</a></li>
+                     <li><a href="/voice-to-text/tamil-voice-typing" title="Tamil Speech to Text">Tamil Voice Typing</a>
+                     </li>
+                     <li><a href="/voice-to-text/telugu-voice-typing" title="Telugu Speech to Text">Telugu Voice
+                           Typing</a></li>
+                     <li><a href="/voice-to-text/thai-voice-typing" title="Thai Speech to Text">Thai Voice Typing</a>
+                     </li>
+                     <li><a href="/voice-to-text/turkish-voice-typing" title="Turkish Speech to Text">Turkish Voice
+                           Typing</a></li>
+                     <li><a href="/voice-to-text/ukrainian-voice-typing" title="Ukrainian Speech to Text">Ukrainian
+                           Voice Typing</a></li>
+                     <li><a href="/voice-to-text/urang-voice-typing" title="Urang Speech to Text">Urang Voice Typing</a>
+                     </li>
+                     <li><a href="/voice-to-text/urdu-voice-typing" title="Urdu Speech to Text">Urdu Voice Typing</a>
+                     </li>
+                     <li><a href="/voice-to-text/vietnamese-voice-typing" title="Vietnamese Speech to Text">Vietnamese
+                           Voice Typing</a></li>
+                     <li><a href="/voice-to-text/zulu-voice-typing" title="Zulu Speech to Text">Zulu Voice Typing</a>
+                     </li>
+                     <li><a href="/voice-to-text" title="Voice to text typing">ALL</a></li>
+                  </ul>
+               </li>
+               <li class="i-translation">
+                  <button type="button" class="link">Translation</button>
+                  <ul>
+                     <li><a href="/translation/afrikaans-to-english-translation"
+                           title="Afrikaans to English Translation">Afrikaans <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/albanian-to-english-translation"
+                           title="Albanian to English Translation">Albanian <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/amharic-to-english-translation"
+                           title="Amharic to English Translation">Amharic <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/arabic-to-english-translation"
+                           title="Arabic to English Translation">Arabic <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/armenian-to-english-translation"
+                           title="Armenian to English Translation">Armenian <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/azerbaijani-to-english-translation"
+                           title="Azerbaijani to English Translation">Azerbaijani <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/basque-to-english-translation"
+                           title="Basque to English Translation">Basque <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/belarusian-to-english-translation"
+                           title="Belarusian to English Translation">Belarusian <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/bengali-to-english-translation"
+                           title="Bengali to English Translation">Bengali <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/bosnian-to-english-translation"
+                           title="Bosnian to English Translation">Bosnian <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/bulgarian-to-english-translation"
+                           title="Bulgarian to English Translation">Bulgarian <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/burmese-to-english-translation"
+                           title="Burmese to English Translation">Burmese <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/catalan-to-english-translation"
+                           title="Catalan to English Translation">Catalan <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/cebuano-to-english-translation"
+                           title="Cebuano to English Translation">Cebuano <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/chinese-simplified-to-english-translation"
+                           title="Chinese (Simplified) to English Translation">Chinese (Simplified) <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/chinese-traditional-to-english-translation"
+                           title="Chinese (Traditional) to English Translation">Chinese (Traditional) <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/corsican-to-english-translation"
+                           title="Corsican to English Translation">Corsican <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/croatian-to-english-translation"
+                           title="Croatian to English Translation">Croatian <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/czech-to-english-translation" title="Czech to English Translation">Czech
+                           <span class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/danish-to-english-translation"
+                           title="Danish to English Translation">Danish <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/dutch-to-english-translation" title="Dutch to English Translation">Dutch
+                           <span class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/esperanto-to-english-translation"
+                           title="Esperanto to English Translation">Esperanto <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/estonian-to-english-translation"
+                           title="Estonian to English Translation">Estonian <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/filipino-to-english-translation"
+                           title="Filipino to English Translation">Filipino <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/finnish-to-english-translation"
+                           title="Finnish to English Translation">Finnish <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/french-to-english-translation"
+                           title="French to English Translation">French <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/frisian-to-english-translation"
+                           title="Frisian to English Translation">Frisian <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/galician-to-english-translation"
+                           title="Galician to English Translation">Galician <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/georgian-to-english-translation"
+                           title="Georgian to English Translation">Georgian <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/german-to-english-translation"
+                           title="German to English Translation">German <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/greek-to-english-translation" title="Greek to English Translation">Greek
+                           <span class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/gujarati-to-english-translation"
+                           title="Gujarati to English Translation">Gujarati <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/haitian-creole-to-english-translation"
+                           title="Haitian Creole to English Translation">Haitian Creole <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/hausa-to-english-translation" title="Hausa to English Translation">Hausa
+                           <span class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/hawaiian-to-english-translation"
+                           title="Hawaiian to English Translation">Hawaiian <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/hebrew-to-english-translation"
+                           title="Hebrew to English Translation">Hebrew <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/hindi-to-english-translation" title="Hindi to English Translation">Hindi
+                           <span class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/hmong-to-english-translation" title="Hmong to English Translation">Hmong
+                           <span class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/hungarian-to-english-translation"
+                           title="Hungarian to English Translation">Hungarian <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/icelandic-to-english-translation"
+                           title="Icelandic to English Translation">Icelandic <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/igbo-to-english-translation" title="Igbo to English Translation">Igbo
+                           <span class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/indonesian-to-english-translation"
+                           title="Indonesian to English Translation">Indonesian <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/irish-to-english-translation" title="Irish to English Translation">Irish
+                           <span class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/italian-to-english-translation"
+                           title="Italian to English Translation">Italian <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/japanese-to-english-translation"
+                           title="Japanese to English Translation">Japanese <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/javanese-to-english-translation"
+                           title="Javanese to English Translation">Javanese <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/kannada-to-english-translation"
+                           title="Kannada to English Translation">Kannada <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/kazakh-to-english-translation"
+                           title="Kazakh to English Translation">Kazakh <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/khmer-to-english-translation" title="Khmer to English Translation">Khmer
+                           <span class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/kinyarwanda-to-english-translation"
+                           title="Kinyarwanda to English Translation">Kinyarwanda <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/korean-to-english-translation"
+                           title="Korean to English Translation">Korean <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/kurdish-to-english-translation"
+                           title="Kurdish to English Translation">Kurdish <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/kyrgyz-to-english-translation"
+                           title="Kyrgyz to English Translation">Kyrgyz <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/lao-to-english-translation" title="Lao to English Translation">Lao <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/latvian-to-english-translation"
+                           title="Latvian to English Translation">Latvian <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/lithuanian-to-english-translation"
+                           title="Lithuanian to English Translation">Lithuanian <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/luxembourgish-to-english-translation"
+                           title="Luxembourgish to English Translation">Luxembourgish <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/macedonian-to-english-translation"
+                           title="Macedonian to English Translation">Macedonian <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/malagasy-to-english-translation"
+                           title="Malagasy to English Translation">Malagasy <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/malay-to-english-translation" title="Malay to English Translation">Malay
+                           <span class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/malayalam-to-english-translation"
+                           title="Malayalam to English Translation">Malayalam <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/maltese-to-english-translation"
+                           title="Maltese to English Translation">Maltese <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/maori-to-english-translation" title="Maori to English Translation">Maori
+                           <span class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/marathi-to-english-translation"
+                           title="Marathi to English Translation">Marathi <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/mongolian-to-english-translation"
+                           title="Mongolian to English Translation">Mongolian <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/nepali-to-english-translation"
+                           title="Nepali to English Translation">Nepali <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/norwegian-to-english-translation"
+                           title="Norwegian to English Translation">Norwegian <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/nyanja-to-english-translation"
+                           title="Nyanja to English Translation">Nyanja <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/odia-to-english-translation" title="Odia to English Translation">Odia
+                           <span class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/pashto-to-english-translation"
+                           title="Pashto to English Translation">Pashto <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/persian-to-english-translation"
+                           title="Persian to English Translation">Persian <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/polish-to-english-translation"
+                           title="Polish to English Translation">Polish <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/portuguese-to-english-translation"
+                           title="Portuguese to English Translation">Portuguese <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/punjabi-to-english-translation"
+                           title="Punjabi to English Translation">Punjabi <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/romanian-to-english-translation"
+                           title="Romanian to English Translation">Romanian <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/russian-to-english-translation"
+                           title="Russian to English Translation">Russian <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/samoan-to-english-translation"
+                           title="Samoan to English Translation">Samoan <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/scottish-gaelic-to-english-translation"
+                           title="Scottish Gaelic to English Translation">Scottish Gaelic <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/serbian-to-english-translation"
+                           title="Serbian to English Translation">Serbian <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/sesotho-to-english-translation"
+                           title="Sesotho to English Translation">Sesotho <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/shona-to-english-translation" title="Shona to English Translation">Shona
+                           <span class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/sindhi-to-english-translation"
+                           title="Sindhi to English Translation">Sindhi <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/sinhala-to-english-translation"
+                           title="Sinhala to English Translation">Sinhala <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/slovak-to-english-translation"
+                           title="Slovak to English Translation">Slovak <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/slovenian-to-english-translation"
+                           title="Slovenian to English Translation">Slovenian <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/somali-to-english-translation"
+                           title="Somali to English Translation">Somali <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/spanish-to-english-translation"
+                           title="Spanish to English Translation">Spanish <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/sundanese-to-english-translation"
+                           title="Sundanese to English Translation">Sundanese <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/swahili-to-english-translation"
+                           title="Swahili to English Translation">Swahili <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/swedish-to-english-translation"
+                           title="Swedish to English Translation">Swedish <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/tajik-to-english-translation" title="Tajik to English Translation">Tajik
+                           <span class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/tamil-to-english-translation" title="Tamil to English Translation">Tamil
+                           <span class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/tatar-to-english-translation" title="Tatar to English Translation">Tatar
+                           <span class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/telugu-to-english-translation"
+                           title="Telugu to English Translation">Telugu <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/thai-to-english-translation" title="Thai to English Translation">Thai
+                           <span class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/turkish-to-english-translation"
+                           title="Turkish to English Translation">Turkish <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/turkmen-to-english-translation"
+                           title="Turkmen to English Translation">Turkmen <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/ukrainian-to-english-translation"
+                           title="Ukrainian to English Translation">Ukrainian <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/urdu-to-english-translation" title="Urdu to English Translation">Urdu
+                           <span class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/uyghur-to-english-translation"
+                           title="Uyghur to English Translation">Uyghur <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/uzbek-to-english-translation" title="Uzbek to English Translation">Uzbek
+                           <span class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/vietnamese-to-english-translation"
+                           title="Vietnamese to English Translation">Vietnamese <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/welsh-to-english-translation" title="Welsh to English Translation">Welsh
+                           <span class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/xhosa-to-english-translation" title="Xhosa to English Translation">Xhosa
+                           <span class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/yiddish-to-english-translation"
+                           title="Yiddish to English Translation">Yiddish <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/yoruba-to-english-translation"
+                           title="Yoruba to English Translation">Yoruba <span
+                              class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation/zulu-to-english-translation" title="Zulu to English Translation">Zulu
+                           <span class="material-symbols-outlined">sync_alt</span> English</a></li>
+                     <li><a href="/translation" title="Translation">ALL</a></li>
+                  </ul>
+               </li>
+               <li class="i-convert">
+                  <a href="/krutidev-to-unicode" class="link"
+                     title="KrutiDev to Unicode Converter, Unicode to KrutiDev Converter">KrutiDev to Unicode</a>
+               </li>
+               <li class="i-cal">
+                  <a href="/age-calculator" class="link">Age Calculator</a>
+               </li>
+            </ul>
+            <button id="hideNavButton"><span class="material-symbols-outlined">close</span></button>
+         </nav>
+         <ul id="mNav">
+            <li><a href="/" class="link"><span class="material-symbols-outlined">home</span></a></li>
+            <li><button class="link" id="showNavButton"><span class="material-symbols-outlined">menu</span></button>
+            </li>
+         </ul>
+
+      </div>
+   </header>
+   <main id="main">
+      <div class="st-container main-wrapper">
+
+         <div id="LeftWrapper" class="st-p">
+            <ol id="breadcrumb" class="st-p0 st-pb-loop">
+               <li><a href="https://www.typingguru.net/voice-to-text" title="Voice to Text">Voice to Text</a></li>
+               <li class="last">Nepali Voice Typing</li>
+            </ol>
+            <article>
+               <header id="pageHeading">
+                  <h1>Nepali (नेपाली) Voice Typing</h1>
+               </header>
+
+               <section>
+                  <div class="st-row" style="justify-content:center">
+
+                     <div id="info">
+                        <p id="info_start">
+                           <mark><b><i>Note:</i></b> Click on the <u>Mic</u> icon and Start Speak.</mark>
+                        </p>
+                        <p id="info_speak_now" class="clr-green" style="display:none">
+                           Speak now.
+                        </p>
+                        <p id="info_no_speech" class="clr-red" style="display:none">
+                           No speech was detected. You may need to adjust your microphone settings.
+                        </p>
+                        <p id="info_no_microphone" class="clr-red" style="display:none">
+                           No microphone was found. Ensure that a microphone is installed and that microphone settings
+                           are configured correctly.
+                        </p>
+                        <p id="info_allow" class="clr-red" style="display:none">
+                           Click the "Allow" button above to enable your microphone.
+                        </p>
+                        <p id="info_denied" class="clr-red" style="display:none">
+                           Permission to use microphone was denied.
+                        </p>
+                        <p id="info_blocked" class="clr-red" style="display:none">
+                           Permission to use microphone is blocked. To change, go to
+                           chrome://settings/contentExceptions#media-stream
+                        </p>
+                        <p id="info_upgrade" class="clr-red" style="display:none">
+                           Speech Recognition is not supported by this browser. Upgrade to <a
+                              href="//www.google.com/chrome" target="_blank">Chrome</a> version 25 or later.
+                        </p>
+                     </div>
+
+                     <div id="results" oncanplaythrough="playf();">
+                        <span class="interim" id="interim_span"></span>
+                     </div>
+
+                  </div>
+
+                  <div id="div_start">
+                     <button id="start_button" onclick="startButton(event)">
+                        <img src="../images/mic.png" alt="Mic button" height="50" style="width:auto;" id="start_img">
+                        <div id="loadingIndicator" style="display:none;"></div>
+                     </button>
+                  </div>
+
+                  <div class="ad-unit-fix-320x55">
+                     <ins class="adsbygoogle" style="display:inline-block;width:320px;height:50px"
+                        data-ad-client="ca-pub-1765769888693648" data-ad-slot="9286333088"></ins>
+                     <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+                  </div>
+
+                  <div id="textareaWrapper">
+
+                     <div class="textareaBtn clearfix">
+                        <button id="copy_button" onClick="copyButton();" class="menuBtn copy-icon">Copy</button>
+                        <button id="print_button" type="button" onclick="printTextArea()"
+                           class="menuBtn printer-icon">Print</button>
+                        <!--button class="menuBtn" type="submit" id="email_button" onclick="EmailText()" name="email" value="Email">Email</button-->
+                        <button onclick="saveTextAsFile()" class="menuBtn download-icon">Save Text to File</button>
+                        <button onclick="saveDocAsFile()" class="menuBtn download-icon">Save as Doc File</button>
+                        <button id="reset_button" type="button" onClick="myFunction6()"
+                           class="menuBtn reset-icon">Reset</button>
+                        <!--form onsubmit="myFunction()" id="my-form" method="POST" action="https://www.typingguru.net" target="_new">
+			<input type="hidden" name="data" id="data" value="not yet defined">
+			<button class="menuBtn" type="submit" id="submit_button">Open in Editor</button>
+		</form-->
+                        <div class="share-icon">
+                           <ul>
+                              <li class="wa">
+                                 <a href="#" title="Share on Whatsapp" id="whatsapp_link" target="_blank"
+                                    onclick="whatsapp_share()">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
+                                       <path
+                                          d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
+                                    </svg>
+                                 </a>
+                              </li>
+                              <li class="tw">
+                                 <a href="#" title="Share on Twitter" id="twitter_link" target="_blank"
+                                    onclick="twitter_share()">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
+                                       <path
+                                          d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z" />
+                                    </svg>
+                                 </a>
+                              </li>
+                           </ul>
+                        </div>
+                     </div>
+
+                     <form name="finaltextform" id="finaltextform">
+                        <!--textarea class="final" id="final_span" name="final_span" oninput="auto_grow(this)" placeholder="Click on the mic icon to activate dictation.."></textarea-->
+                        <textarea class="final" id="final_span" name="final_span" oninput="auto_grow(this)"></textarea>
+                     </form>
+
+                     <div class="words-count-wrapper clearfix">
+                        <div class="words-count-cntnr">Characters (with spaces): <span id="totalChars">0</span></div>
+                        <div class="words-count-cntnr">Characters: <span id="charCountNoSpace">0</span></div>
+                        <div class="words-count-cntnr">Words: <span id="wordCount">0</span></div>
+                     </div>
+
+                  </div>
+
+                  <div id="div_language">
+                     <select id="select_language" style="padding:3px 5px;" onchange="updateCountry()"></select>
+                     <select id="select_dialect" style="padding:3px 5px;"></select>
+                  </div>
+                  <div class="st-text-center st-mt-loop">
+                     <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1765769888693648"
+                        data-ad-slot="9601646015" data-ad-format="auto" data-full-width-responsive="true"></ins>
+                     <script>
+                        (adsbygoogle = window.adsbygoogle || []).push({});
+                     </script>
+                  </div>
+
+                  <div>
+                     <p><b style="color:#f00;">Note</b>: This feature currently works only on Google Chrome browser. You
+                        can download and install Google Chrome. <a href="https://www.google.com/intl/en_in/chrome"
+                           title="Google Chrome Download" target="_blank"><b>Download Google Chrome</b></a></p>
+                     <p><strong>Nepali (नेपाली) voice typing</strong> is an easy method of typing. This is a very good
+                        option for those who want to write Nepali without using any keyboard. All you need is a good
+                        mic, set up the mic in your computer and start speaking, the Voice to Text typing tool will
+                        recognize your voice and automatically start typing Nepali. After voice typing, you can copy it
+                        and use it on MS Word, social media, comments, Nepali articles etc. Please share it on Facebook,
+                        Twitter and WhatsApp and help us reach more users.</p>
+                     <h2>Instruction</h2>
+                     <ul class="article-ul-list">
+                        <li>You must have a good quality mic.</li>
+                        <li>You have to speak loud and clear.</li>
+                     </ul>
+                  </div>
+               </section>
+
+            </article>
+
+            <section class="related-tags st-px-loop st-py st-mt">
+               <h2>RELATED LINKS</h2>
+               <ul>
+                  <li><a href="/translation/nepali-to-english-translation"><span class="hand-symbol">&#128073;</span>
+                        Nepali to English Translation</a></li>
+                  <li><a href="/translation/english-to-nepali-translation"><span class="hand-symbol">&#128073;</span>
+                        English to Nepali Translation</a></li>
+               </ul>
+            </section>
+
+         </div>
+
+         <aside id="aside">
+
+            <div class="sticky st-p">
+
+               <div>
+                  <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1765769888693648"
+                     data-ad-slot="9601646015" data-ad-format="auto" data-full-width-responsive="true"></ins>
+                  <script>
+                     (adsbygoogle = window.adsbygoogle || []).push({});
+                  </script>
+               </div>
+
+            </div><!--div class="loop-repeat">
+	<div class="custom-ad-unit-wrapper">
+		<a href="https://www.fastestjobalert.com" title="Fastest Job Alert" target="_blank">
+			<img src="https://www.fastestjobalert.com/images/fastest-job-alert-ad-banner.jpg" width="300" height="250" alt="Fastest Job Alert Ad Banner">
+		</a>
+	</div>
+</div-->
+
+         </aside>
+      </div>
+   </main>
+   <footer id="footer">
+      <div class="st-container st-py-loop">
+
+         <section class="menu services st-p">
+            <h3 class="heading">SERVICES</h3>
+            <ul>
+               <li><a href="/font" class="i-fonts" title="Free fonts">ALL Fonts</a></li>
+               <li><a href="/hindi-fonts" class="i-fonts">Hindi Fonts</a></li>
+               <li><a href="/punjabi-fonts" class="i-fonts">Punjabi Fonts</a></li>
+               <li><a href="/tamil-fonts" class="i-fonts">Tamil Fonts</a></li>
+               <li><a href="/telugu-fonts" class="i-fonts">Telugu Fonts</a></li>
+               <li><a href="/thai-fonts" class="i-fonts">Thai Fonts</a></li>
+               <li><a href="/typing" class="i-keyboard" title="Type in these 22 languages">Typing</a></li>
+               <li><a href="/voice-to-text" class="i-mic" title="Voice to text typing">Voice Typing</a></li>
+               <li><a href="/voice-to-text" class="i-translation">Translation</a></li>
+               <li><a href="/krutidev-to-unicode" class="i-convert"
+                     title="KrutiDev to Unicode Converter, Unicode to KrutiDev Converter">Krutidev &lt;=&gt; Unicode</a>
+               </li>
+               <li><a href="/age-calculator" class="i-cal">Age Calculator</a></li>
+            </ul>
+         </section>
+
+         <section class="menu st-p">
+            <h3 class="heading">INFORMATION</h3>
+            <ul>
+               <li><a href="/" class="i-home" title="TypingGuru Home">Home</a></li>
+               <li><a href="/about-us" class="i-about">About Us</a></li>
+               <li><a href="/privacy-policy" class="i-privacy">Privacy Policy</a></li>
+               <li><a href="/contact-us" class="i-contact">Contact Us</a></li>
+               <!--li><a href="/sitemap" class="i-sitemap">Sitemap</a></li-->
+            </ul>
+         </section>
+
+         <div id="followSec" class="st-p">
+            <a href="/" title="TypingGuru Home"><img src="/images/logo.png" alt="TypingGuru Logo" width="165"
+                  height="34"></a>
+            <!--h3 class="heading">FOLLOW US ON</h3-->
+            <ul class="follow-icon">
+               <li class="fb">
+                  <a href="https://www.facebook.com/typingguru.net" title="TypingGuru facebook page" target="_blank">
+                     <svg viewBox="0 0 512 512">
+                        <path
+                           d="M374.245,285.825l14.104,-91.961l-88.233,0l0,-59.677c0,-25.159 12.325,-49.682 51.845,-49.682l40.117,0l0,-78.291c0,0 -36.408,-6.214 -71.214,-6.214c-72.67,0 -120.165,44.042 -120.165,123.775l0,70.089l-80.777,0l0,91.961l80.777,0l0,222.31c16.197,2.542 32.798,3.865 49.709,3.865c16.911,0 33.512,-1.323 49.708,-3.865l0,-222.31l74.129,0Z">
+                        </path>
+                     </svg>
+                  </a>
+               </li>
+            </ul>
+            <div id="copyright">&copy; 2020 - 2023 TypingGuru.net</div>
+         </div>
+
+      </div>
+   </footer>
+   <div id="navBgOverlay"></div>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+   <script>
+      var langs = [
+         ['नेपाली (नेपाल)', ['ne-NP']]
+      ];
+   </script>
+   <script src="../Copy/voice-to-text/js/voice-typing-custom.js"></script>
+   <script src="../Copy/voice-to-text/js/fieldtoclipboard.js"></script>
+   <script>
+      function addtext(final_transcript) {
+         document.finaltextform.final_span.value = document.finaltextform.final_span.value + ' ' + final_transcript;
+         document.finaltextform.final_span.value = document.finaltextform.final_span.value.replace(/\s{2,}/g, ' ');
+      }
+
+      // For cache
+      window.onload = function () {
+         var nepalifinalVoice = localStorage.getItem('nepalifinalVoice');
+         if (nepalifinalVoice !== null) $('#final_span').val(nepalifinalVoice);
+      }
+      window.onbeforeunload = function () {
+         localStorage.setItem("nepalifinalVoice", $('#final_span').val());
+      }
+   </script>
+
+   <script src="js/common.js"></script>
+</body>
+
+</html>
