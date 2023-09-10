@@ -444,7 +444,7 @@ const tasks = [
   },
   {
     nepali: "सामाजिक सुरक्षा भत्ता नाम दर्ता सम्बन्धमा",
-    roman: "Samajik Suraksha Bhata Naam Darta Sambandhama",
+    roman: "Samajik Suraksha Bhata Naam Darta Samb1``andhama",
   },
   { nepali: "बहाल समझौता", roman: "Bahal Samjhaauta" },
   { nepali: "कोठा खोली पाऊँ", roman: "Kotha Kholi Paun" },
@@ -478,6 +478,21 @@ const tasks = [
   { nepali: "अंग्रेजीमा सिफारिस", roman: "Angrejima Sifaris" },
 ];
 
+async function queryy(data) {
+  const response = await fetch(
+    "https://api-inference.huggingface.co/models/syubraj/sentence_similarity_nepali",
+    {
+      headers: {
+        Authorization: "Bearer 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",
+      },
+      method: "POST",
+      body: JSON.stringify(data),
+    }
+  );
+  const result = await response.json();
+  return result;
+}
+
 function findMostSimilarTask(query) {
   // Step 1: Split the input query into words in Nepali.
   const queryWords = query.split(" ");
@@ -498,117 +513,8 @@ function findMostSimilarTask(query) {
 
     // Calculate the similarity score based on word overlap.
     const score = intersection.size / queryWordCount;
-
+    console.log(score);
     return { task, score };
-  });
-
-  // Step 2: Calculate similarity scores based on Roman words.
-  const taskScoresRoman = tasks.map((task) => {
-    // Split the Roman task description into words.
-    const taskWords = task.roman.split(" ");
-    const taskWordCount = taskWords.length;
-    const taskWordSet = new Set(taskWords);
-
-    // Calculate the intersection of words between the query and task description.
-    const intersection = new Set(
-      [...queryWordSet].filter((x) => taskWordSet.has(x))
-    );
-
-    // Calculate the similarity score based on word overlap.
-    const score = intersection.size / queryWordCount;
-
-    return { task, score };
-  });
-
-  // Step 3: Calculate similarity scores based on Nepali letters.
-  const taskScoresNepali = tasks.map((task) => {
-    // Split the Nepali task description into letters.
-    const taskLetters = task.nepali.split("");
-    const taskLetterCount = taskLetters.length;
-    const taskLetterSet = new Set(taskLetters);
-
-    // Calculate the intersection of letters between the query and task description.
-    const intersection = new Set(
-      [...queryWordSet].filter((x) => taskLetterSet.has(x))
-    );
-
-    // Calculate the similarity score based on letter overlap.
-    const score = intersection.size / queryWordCount;
-
-    return { task, score };
-  });
-
-  // Step 4: Calculate similarity scores based on Roman letters.
-  const taskScoresRomanLetters = tasks.map((task) => {
-    // Split the Roman task description into letters.
-    const taskLetters = task.roman.split("");
-    const taskLetterCount = taskLetters.length;
-    const taskLetterSet = new Set(taskLetters);
-
-    // Calculate the intersection of letters between the query and task description.
-    const intersection = new Set(
-      [...queryWordSet].filter((x) => taskLetterSet.has(x))
-    );
-
-    // Calculate the similarity score based on letter overlap.
-    const score = intersection.size / queryWordCount;
-
-    return { task, score };
-  });
-
-  //Step 5 : Calculate the similarity score based on Nepali combination of 2 letters each together
-
-  const taskScoresNepali2 = tasks.map((task) => {
-    // Split the Nepali task description into letters.
-    const taskLetters = task.nepali.split("");
-    //make combination of 2 together letters
-    const taskLetters2 = taskLetters.map((letter, index) => {
-      if (index < taskLetters.length - 1) {
-        return letter + taskLetters[index + 1];
-      }
-    });
-    const taskLetterCount = taskLetters2.length;
-    const taskLetterSet = new Set(taskLetters2);
-    // Calculate the intersection of letters between the query and task description.
-    const intersection = new Set(
-      [...queryWordSet].filter((x) => taskLetterSet.has(x))
-    );
-    // Calculate the similarity score based on letter overlap.
-    const score = intersection.size / queryWordCount;
-    return { task, score };
-  });
-
-  //Step 6 : Calculate the similarity score based on Roman combination of 2 letters each together
-
-  const taskScoresRoman2 = tasks.map((task) => {
-    // Split the Roman task description into letters.
-    const taskLetters = task.roman.split("");
-    //make combination of 2 together letters
-    const taskLetters2 = taskLetters.map((letter, index) => {
-      if (index < taskLetters.length - 1) {
-        return letter + taskLetters[index + 1];
-      }
-    });
-    const taskLetterCount = taskLetters2.length;
-    const taskLetterSet = new Set(taskLetters2);
-    // Calculate the intersection of letters between the query and task description.
-    const intersection = new Set(
-      [...queryWordSet].filter((x) => taskLetterSet.has(x))
-    );
-    // Calculate the similarity score based on letter overlap.
-    const score = intersection.size / queryWordCount;
-    return { task, score };
-  });
-
-  // Combine the scores from all the methods.
-  taskScores.forEach((taskScore, index) => {
-    taskScore.score =
-      taskScore.score +
-      taskScoresRoman[index].score +
-      taskScoresNepali[index].score +
-      taskScoresRomanLetters[index].score +
-      taskScoresNepali2[index].score +
-      taskScoresRoman2[index].score;
   });
 
   // Step 3: Sort the tasks by their similarity scores.
@@ -620,6 +526,24 @@ function findMostSimilarTask(query) {
 
 function checkNow() {
   const query = document.getElementById("final_span").value;
-  const mostSimilarTask = findMostSimilarTask(query);
-  alert(query + " = " + mostSimilarTask.nepali);
+  /* const mostSimilarTask = findMostSimilarTask(query);
+  alert(query + " = " + mostSimilarTask.nepali); */
+
+  queryy({
+    inputs: {
+      source_sentence: query,
+      //tasks to array of nepali text from tasks
+      sentences: tasks.map((task) => task.nepali),
+    },
+  }).then((response) => {
+    let maxInd = 0;
+    let maxval = response[0];
+    response.forEach((res) => {
+      if (res > maxval) {
+        maxval = res;
+        maxInd = response.indexOf(res);
+      }
+    });
+    alert(query + " = " + tasks[maxInd].nepali);
+  });
 }
